@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Mental Health Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef3f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 450px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.2);
+            padding: 20px;
+        }
+
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .user-message {
+            text-align: right;
+            color: #444;
+            margin: 5px;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: #205ecf;
+            margin: 5px;
+        }
+
+        .input-area {
+            display: flex;
+        }
+
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 14px;
+            background-color: #205ecf;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        h2 {
+            text-align: center;
+            color: #205ecf;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h2>AI Chat Support 💬</h2>
+        <div class="chat-box" id="chatBox">
+            <div class="bot-message">Hi there! I'm here for you. Feel free to tell me how you're doing today.</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="Type how you feel..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value.trim();
+            if (message === "") return;
+
+            const chatBox = document.getElementById("chatBox");
+
+            const userMsg = document.createElement("div");
+            userMsg.className = "user-message";
+            userMsg.textContent = "You: " + message;
+            chatBox.appendChild(userMsg);
+
+            const msg = message.toLowerCase();
+            const botMsg = document.createElement("div");
+            botMsg.className = "bot-message";
+
+            // Crisis detection
+            if (msg.includes("hurt myself") || msg.includes("suicide") || msg.includes("end it all") || msg.includes("no reason to live")) {
+                botMsg.textContent = "AI: I'm truly concerned about what you shared. Please, talk to someone you trust or a professional. You're not alone, and your life is valuable. 💛 If you're in urgent need, reach out to a helpline immediately.";
+            }
+            // Study or exam stress
+            else if (msg.includes("midterm") || msg.includes("case study") || msg.includes("assignment") || msg.includes("exam") || msg.includes("university")) {
+                botMsg.textContent = "AI: I understand how stressful academics can be. You're doing your best, and that's enough. Remember to take breaks, stay hydrated, and breathe. One step at a time. You're stronger than you think. 📘✨";
+            }
+            // General stress and overwhelm
+            else if (msg.includes("stressed") || msg.includes("tired") || msg.includes("overwhelmed") || msg.includes("burned out")) {
+                botMsg.textContent = "AI: It’s okay to feel tired. Life gets heavy sometimes. Please don’t forget to rest. Even a short walk or music can help clear your mind. You’re not alone in this — I’m proud of you for trying. 💙";
+            }
+            // Sadness and loneliness
+            else if (msg.includes("sad") || msg.includes("down") || msg.includes("depressed") || msg.includes("lonely") || msg.includes("upset")) {
+                botMsg.textContent = "AI: I'm sorry you're feeling this way. It’s brave of you to talk about it. Even dark days pass, and you're stronger than the sadness. You matter, and better days are coming. Let’s get through this together. 🌤️";
+            }
+            // Positive feelings
+            else if (msg.includes("happy") || msg.includes("good") || msg.includes("better") || msg.includes("relieved") || msg.includes("grateful")) {
+                botMsg.textContent = "AI: That’s wonderful! Celebrate those good moments — you deserve them. Your light can brighten the lives of others too. 🌟 Keep going!";
+            }
+            // Default gentle fallback
+            else {
+                botMsg.textContent = "AI: Thank you for sharing that. Your feelings are valid, and I’m really glad you reached out. I’m here if you want to keep talking. 🤍";
+            }
+
+            chatBox.appendChild(botMsg);
+            input.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
+
+
